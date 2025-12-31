@@ -13,6 +13,5 @@ public class Income {
 
     public int calculateNetIncome() {
         return totalIncome - (salaryExpense + lightExpense);
-
     }
 }
