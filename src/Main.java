@@ -16,6 +16,7 @@ public class Main {
 
             if (input.equals("exit")) break;
 
+
             switch (input) {
                 case "add client":
                     System.out.println("input customer id:");
