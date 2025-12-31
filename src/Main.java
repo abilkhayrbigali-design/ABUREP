@@ -1,144 +1,92 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     private static final int PRICE_PER_CUSTOMER = 5000;
 
-    public static int calculateTotalSalaries(ArrayList<employees> employees_list) {
-        int total_salary = 0;
-        for (int i = 0; i < employees_list.size(); i++) {
-            employees emp = employees_list.get(i);
-            total_salary += emp.getEmployee_salary();
-        }
-        return total_salary;
-    }
-
     public static void main(String[] args) {
-        String User_in ;
         Scanner scanner = new Scanner(System.in);
-        ArrayList<cusstomers> cusstomers_list = new ArrayList<>();
-        ArrayList<employees> employees_list = new ArrayList<>();
-
-        income company_income = new income();
-
+        ArrayList<Customer> customers = new ArrayList<>();
+        ArrayList<Employee> employees = new ArrayList<>();
+        Income incomeReport = new Income();
 
         while (true) {
-            int customers_amount;
-            System.out.println("Введите команду: 'add client', 'client list', 'add employee', 'list employee', 'calculate income', 'exit'");
-            User_in = scanner.nextLine();
-            if (User_in.equals("exit")) {
-                break;
-            }
-            else if (User_in.equals("add client")) {
-                cusstomers_list.add(new cusstomers());
-                customers_amount = cusstomers_list.size();
-                System.out.println("input cusstomer_id:");
-                int cusstomer_id = scanner.nextInt();
-                scanner.nextLine();
-                cusstomers_list.get(customers_amount-1).setCusstomer_id(cusstomer_id);
-                System.out.println("input cusstomer_name:");
-                String cusstomer_name = scanner.nextLine();
-                System.out.println("input cusstomer_age:");
-                int cusstomer_age = scanner.nextInt();
-                scanner.nextLine();
-                System.out.println("input cusstomer_gender:");
-                String cusstomer_gender = scanner.nextLine();
-                System.out.println("input cusstomer_daysleft:");
-                int cusstomer_daysleft = scanner.nextInt();
-                scanner.nextLine();
-                System.out.println("input cusstomer_Email:");
-                String cusstomer_email = scanner.nextLine();
-                cusstomers_list.get(customers_amount - 1).setCusstomer_name(cusstomer_name);
-                cusstomers_list.get(customers_amount - 1).setCusstomer_age(cusstomer_age);
-                cusstomers_list.get(customers_amount - 1).setCusstomer_gender(cusstomer_gender);
-                cusstomers_list.get(customers_amount - 1).setCustomer_daysleft(cusstomer_daysleft);
-                cusstomers_list.get(customers_amount - 1).setCusstomer_email(cusstomer_email);
-            }
-            else if (User_in.equals("client list")) {
-                if (cusstomers_list.isEmpty()) {
-                    System.out.println("list is empty.");}
-                else{
-                    for (int i = 0; i < cusstomers_list.size(); i++) {
-                        System.out.print("Client ID:");
-                        System.out.println(cusstomers_list.get(i).getCusstomer_id());
-                        System.out.print("Client Name:");
-                        System.out.println(cusstomers_list.get(i).getCusstomer_name());
-                        System.out.print("Client Age:");
-                        System.out.println(cusstomers_list.get(i).getCusstomer_age());
-                        System.out.print("Client Email:");
-                        System.out.println(cusstomers_list.get(i).getCusstomer_email());
-                        System.out.print("Client Days left:");
-                        System.out.println(cusstomers_list.get(i).getCustomer_daysleft());
-                        System.out.print("Client Gender:");
-                        System.out.println(cusstomers_list.get(i).getCusstomer_gender());
-                        System.out.println("---");
-                    }   }
-            }
-            else if (User_in.equals("add employee")) {
+            System.out.println("input command: 'add client', 'client list', 'add employee', 'list employee', 'sort', 'search', 'calculate income', 'exit'");
+            String input = scanner.nextLine();
 
-                employees_list.add(new employees());
-                int employees_amount;
-                employees_amount = employees_list.size();
+            if (input.equals("exit")) break;
 
-                System.out.println("input employee id:");
-                int employee_id = scanner.nextInt();
-                scanner.nextLine();
-                System.out.println("input employee name:");
-                String employee_name = scanner.nextLine();
-                System.out.println("input employee_place:");
-                String employee_place = scanner.nextLine();
-                System.out.println("input employee_salary:");
-                int employee_salary = scanner.nextInt();
-                scanner.nextLine();
+            switch (input) {
+                case "add client":
+                    System.out.println("input customer id:");
+                    int cId = scanner.nextInt(); scanner.nextLine();
+                    System.out.println("input customer name:");
+                    String cName = scanner.nextLine();
+                    System.out.println("input customer age:");
+                    int cAge = scanner.nextInt(); scanner.nextLine();
+                    System.out.println("input customer gender:");
+                    String cGender = scanner.nextLine();
+                    System.out.println("input customer days left:");
+                    int cDays = scanner.nextInt(); scanner.nextLine();
+                    System.out.println("input customer email:");
+                    String cEmail = scanner.nextLine();
+                    customers.add(new Customer(cId, cName, cAge, cGender, cDays, cEmail));
+                    break;
 
-                employees_list.get(employees_amount -1 ).setEmployee_id(employee_id);
-                employees_list.get(employees_amount -1 ).setEmployee_name(employee_name);
-                employees_list.get(employees_amount - 1).setEmployee_place(employee_place);
-                employees_list.get(employees_amount - 1).setEmployee_salary(employee_salary);
-            }
-            else if (User_in.equals("list employee")) {
-                if (employees_list.isEmpty()) {
-                    System.out.println("list is empty.");}
-                else{
-                    for (int i = 0; i < employees_list.size(); i++) {
-                        System.out.print("Employee ID:");
-                        System.out.println(employees_list.get(i).getEmployee_id());
-                        System.out.print("Employee Name:");
-                        System.out.println(employees_list.get(i).getEmployee_name());
-                        System.out.print("Employee Place:");
-                        System.out.println(employees_list.get(i).getEmployee_place());
-                        System.out.print("Employee Salary:");
-                        System.out.println(employees_list.get(i).getEmployee_salary());
-                        System.out.println("---");
-                    }
-                }
-            }
-            else if (User_in.equals("calculate income")) {
+                case "client list":
+                    if (customers.isEmpty()) System.out.println("list is empty.");
+                    else customers.forEach(System.out::println);
+                    break;
 
-                int num_of_customers = cusstomers_list.size();
-                int total_income = num_of_customers * PRICE_PER_CUSTOMER;
+                case "add employee":
+                    System.out.println("input employee id:");
+                    int eId = scanner.nextInt(); scanner.nextLine();
+                    System.out.println("input employee name:");
+                    String eName = scanner.nextLine();
+                    System.out.println("input employee position:");
+                    String ePos = scanner.nextLine();
+                    System.out.println("input employee salary:");
+                    int eSalary = scanner.nextInt(); scanner.nextLine();
+                    employees.add(new Employee(eId, eName, ePos, eSalary));
+                    break;
 
-                System.out.println("Total Customers: " + num_of_customers);
-                System.out.println("Calculated Total Income (5000 per customer): " + total_income);
+                case "list employee":
+                    if (employees.isEmpty()) System.out.println("list is empty.");
+                    else employees.forEach(System.out::println);
+                    break;
 
-                System.out.println("Input Total monthly light/utility expense:");
-                int total_light = scanner.nextInt();
-                scanner.nextLine();
+                case "sort":
+                    customers.sort(Comparator.comparing(Person::getName));
+                    System.out.println("Customers sorted by name.");
+                    break;
 
-                int total_salaries = calculateTotalSalaries(employees_list);
+                case "search":
+                    System.out.println("Enter ID to search:");
+                    int searchId = scanner.nextInt(); scanner.nextLine();
+                    customers.stream()
+                            .filter(c -> c.getId() == searchId)
+                            .findFirst()
+                            .ifPresentOrElse(System.out::println, () -> System.out.println("Not found."));
+                    break;
 
-                company_income.setTotal_income(total_income);
-                company_income.setTotal_light_expense(total_light);
-                company_income.setTotal_salary_expense(total_salaries);
+                case "calculate income":
+                    int totalSalaries = employees.stream().mapToInt(Employee::getSalary).sum();
+                    int revenue = customers.size() * PRICE_PER_CUSTOMER;
+                    System.out.println("Total Customers: " + customers.size());
+                    System.out.println("Input Light Expense:");
+                    int light = scanner.nextInt(); scanner.nextLine();
 
-                System.out.println("Income Report");
-                System.out.println("Total Income: " + company_income.getTotal_income());
-                System.out.println("Total Salary Expense: " + company_income.getTotal_salary_expense());
-                System.out.println("Total Light Expense: " + company_income.getTotal_light_expense());
-                int net_income = company_income.calculate_net_income();
-                System.out.println("Net Income: " + net_income );
-            } else {
-                System.out.println("error.");
+                    incomeReport.setTotalIncome(revenue);
+                    incomeReport.setSalaryExpense(totalSalaries);
+                    incomeReport.setLightExpense(light);
+
+                    System.out.println("Income Report:");
+                    System.out.println("Total Revenue: " + incomeReport.getTotalIncome());
+                    System.out.println("Net Income: " + incomeReport.calculateNetIncome());
+                    break;
+
+                default:
+                    System.out.println("error.");
             }
         }
     }
