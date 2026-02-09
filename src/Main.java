@@ -247,6 +247,78 @@ public class Main {
                     }
                     break;
 
+
+                case "update employee":
+                    System.out.println("input ID :");
+                    int upEmpId = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.println("new name");
+                    String upEmpName = scanner.nextLine();
+                    System.out.println("new place ");
+                    String upEmpPos = scanner.nextLine();
+                    System.out.println("New salary:");
+                    int upEmpSalary = scanner.nextInt();
+                    scanner.nextLine();
+
+                    String updateEmpSql = "UPDATE employee SET name = ?, position = ?, salary = ? WHERE id = ?";
+
+                    try (PreparedStatement pstmt = connection.prepareStatement(updateEmpSql)) {
+                        pstmt.setString(1, upEmpName);
+                        pstmt.setString(2, upEmpPos);
+                        pstmt.setInt(3, upEmpSalary);
+                        pstmt.setInt(4, upEmpId);
+
+                        int rowsAffected = pstmt.executeUpdate();
+                        if (rowsAffected > 0) {
+                            System.out.println("Employe with ID " + upEmpId + " updated successfully!");
+                        } else {
+                            System.out.println("Error");
+                        }
+                    } catch (SQLException e) {
+                        System.out.println("Error " + e.getMessage());
+                    }
+                    break;
+
+                case "update client":
+                    System.out.println("input ID :");
+                    int upClientId = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.println("new name:");
+                    String upCName = scanner.nextLine();
+                    System.out.println("new age:");
+                    int upCAge = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("gender:");
+                    String upCGender = scanner.nextLine();
+                    System.out.println("new days left:");
+                    int upCDays = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("New email:");
+                    String upCEmail = scanner.nextLine();
+
+                    String updateClientSql = "UPDATE client SET name = ?, age = ?, gender = ?, days_left = ?, email = ? WHERE id = ?";
+
+                    try (PreparedStatement pstmt = connection.prepareStatement(updateClientSql)) {
+                        pstmt.setString(1, upCName);
+                        pstmt.setInt(2, upCAge);
+                        pstmt.setString(3, upCGender);
+                        pstmt.setInt(4, upCDays);
+                        pstmt.setString(5, upCEmail);
+                        pstmt.setInt(6, upClientId);
+
+                        int rowsAffected = pstmt.executeUpdate();
+                        if (rowsAffected > 0) {
+                            System.out.println("data updated successfully!");
+                        } else {
+                            System.out.println("wasnt found with  ID " + upClientId + " .");
+                        }
+                    } catch (SQLException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                    break;
+
                 default:
                     System.out.println("error.");
             }
